@@ -34,3 +34,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Import complete merged Phuck StraightTalk source"
           git push origin HEAD:main
+
+# Triggered after workflow registration.
