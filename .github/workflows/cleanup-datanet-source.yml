@@ -194,11 +194,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install required Android SDK packages
-        shell: bash
-        run: |
-          yes | sdkmanager --licenses >/dev/null
-          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools, platforms;android-34, build-tools;34.0.0'
 
       - name: Build and test imported source
         id: build
