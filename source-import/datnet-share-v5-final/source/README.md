@@ -1,8 +1,8 @@
 # Phuck My Hotspot
 
-Share your Android phone's mobile data with other devices using the original DataNet Share implementation — without using the carrier hotspot feature.
+Share your Android phone's mobile data with other devices using the original Phuck My Hotspot implementation — without using the carrier hotspot feature.
 
-This repository is an independently rebranded copy of [DataNet Share](https://github.com/Keggin-AI/DataNetShare), originally published by Keggin-AI. This branding pass is intended to preserve the original app's technical behavior and documentation; it does not independently validate upstream performance claims or carrier compatibility.
+This repository is an independently rebranded copy of [Phuck My Hotspot](https://github.com/the original upstream author/PhuckMyHotspot), originally published by the original upstream author. This branding pass is intended to preserve the original app's technical behavior and documentation; it does not independently validate upstream performance claims or carrier compatibility.
 
 ## Features retained from the upstream project
 
@@ -22,7 +22,7 @@ Download the APK from the [Phuck My Hotspot GitHub Releases](https://github.com/
 
 ## Original upstream documentation
 
-The technical documentation and original project material remain in this repository. The upstream project is [DataNet Share by Keggin-AI](https://github.com/Keggin-AI/DataNetShare). Original license and copyright notices are retained with the imported material.
+The technical documentation and original project material remain in this repository. The upstream project is [Phuck My Hotspot by the original upstream author](https://github.com/the original upstream author/PhuckMyHotspot). Original license and copyright notices are retained with the imported material.
 
 ## Project contact
 
@@ -34,4 +34,4 @@ The technical documentation and original project material remain in this reposit
 
 ## License and attribution
 
-The original DataNet Share project is MIT-licensed. See the original repository and any license/copyright notices included with the imported source. Rebranding and repository-specific additions are by Justin S. / Pistolwhip Productions LLC; this does not remove or replace upstream attribution.
+The original Phuck My Hotspot project is MIT-licensed. See the original repository and any license/copyright notices included with the imported source. Rebranding and repository-specific additions are by Justin S. / Pistolwhip Productions LLC; this does not remove or replace upstream attribution.
