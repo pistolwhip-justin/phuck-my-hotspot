@@ -1,0 +1,211 @@
+name: Clean DataNet references from imported source
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: Branch or commit to use as the cleanup starting point
+        required: true
+        default: main
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: cleanup-datanet-source
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out requested starting point
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.base_ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create isolated cleanup branch
+        id: branch
+        shell: bash
+        run: |
+          BRANCH="cleanup/remove-datanet-source-${GITHUB_RUN_ID}"
+          git switch -c "$BRANCH"
+          echo "name=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Migrate source branding and package references
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import shutil
+          import sys
+
+          root = Path("source-import/datnet-share-v5-final/source")
+          if not root.is_dir():
+              raise SystemExit(f"Expected source directory not found: {root}")
+
+          # Keep legal notices and license texts intact. This is a branding/package
+          # migration only; no networking, socket, VPN, Wi-Fi Direct, or service logic
+          # is rewritten.
+          excluded_names = {
+              "LICENSE", "LICENSE.md", "LICENSE.txt", "NOTICE", "NOTICE.md",
+              "COPYING", "COPYING.txt"
+          }
+          replacements = [
+              ("com.datanet.share", "pro.pistolwhip.phuckmyhotspot"),
+              ("com/datanet/share", "pro/pistolwhip/phuckmyhotspot"),
+              ("com\\.datanet\\.share", "pro\\.pistolwhip\\.phuckmyhotspot"),
+              ("datanet_share_service", "phuck_my_hotspot_service"),
+              ("DataNetShare", "PhuckMyHotspot"),
+              ("DataNet Share", "Phuck My Hotspot"),
+              ("DataNetShare", "PhuckMyHotspot"),
+              ("Theme.DataNetShare", "Theme.PhuckMyHotspot"),
+              ("datnet-share", "phuck-my-hotspot"),
+              ("DataNet", "Phuck My Hotspot"),
+              ("datanet", "phuckmyhotspot"),
+          ]
+
+          # Replace textual references in source files only; skip binary/generated
+          # content and preserve legal notice files verbatim.
+          for path in sorted(root.rglob("*")):
+              if not path.is_file() or path.name in excluded_names:
+                  continue
+              if ".cxx" in path.parts:
+                  continue
+              try:
+                  original = path.read_text(encoding="utf-8")
+              except (UnicodeDecodeError, OSError):
+                  continue
+              updated = original
+              for old, new in replacements:
+                  updated = updated.replace(old, new)
+              if updated != original:
+                  path.write_text(updated, encoding="utf-8", newline="")
+
+          # Move Kotlin/Java package source directories to match the new namespace.
+          old_pkg = root / "app/src/main/java/com/datanet/share"
+          new_pkg = root / "app/src/main/java/pro/pistolwhip/phuckmyhotspot"
+          if old_pkg.exists():
+              new_pkg.parent.mkdir(parents=True, exist_ok=True)
+              if new_pkg.exists():
+                  shutil.copytree(old_pkg, new_pkg, dirs_exist_ok=True)
+                  shutil.rmtree(old_pkg)
+              else:
+                  shutil.move(str(old_pkg), str(new_pkg))
+          # Remove now-empty legacy package directories.
+          for candidate in [
+              root / "app/src/main/java/com/datanet",
+              root / "app/src/main/java/com",
+          ]:
+              if candidate.exists():
+                  try:
+                      candidate.rmdir()
+                  except OSError:
+                      pass
+
+          # Generated native build output is reproducible and not source.
+          for generated in list(root.rglob(".cxx")):
+              if generated.is_dir():
+                  shutil.rmtree(generated)
+
+          # Rename the source README's project-facing upstream branding, without
+          # altering license/copyright files or the actual networking implementation.
+          readme = root / "README.md"
+          if readme.exists():
+              text = readme.read_text(encoding="utf-8")
+              text = text.replace("DataNet Share", "the original upstream project")
+              text = text.replace("DataNetShare", "the original upstream project")
+              text = text.replace("Keggin-AI", "the original upstream author")
+              readme.write_text(text, encoding="utf-8", newline="")
+
+          # Verify no legacy package/brand identifiers remain in non-legal text.
+          patterns = [
+              re.compile(r"com[./]datanet[./]share", re.I),
+              re.compile(r"datanet_share_service", re.I),
+              re.compile(r"DataNet\s*Share|DataNetShare|datnet-share", re.I),
+              re.compile(r"Theme\.DataNetShare", re.I),
+          ]
+          findings = []
+          for path in root.rglob("*"):
+              if not path.is_file() or path.name in excluded_names or ".cxx" in path.parts:
+                  continue
+              try:
+                  data = path.read_text(encoding="utf-8")
+              except (UnicodeDecodeError, OSError):
+                  continue
+              for number, line in enumerate(data.splitlines(), 1):
+                  if any(pattern.search(line) for pattern in patterns):
+                      findings.append(f"{path}:{number}: {line.strip()}")
+          if findings:
+              print("Legacy identifiers remain:")
+              print("\n".join(findings))
+              raise SystemExit(1)
+
+          print("Source migration and legacy identifier scan completed.")
+          PY
+
+      - name: Confirm source-only change scope
+        shell: bash
+        run: |
+          git status --short
+          python3 - <<'PY'
+          import subprocess, sys
+          changed = subprocess.check_output(
+              ["git", "status", "--short", "--untracked-files=all"],
+              text=True
+          ).splitlines()
+          allowed = (
+              "source-import/datnet-share-v5-final/source/",
+          )
+          outside = [line for line in changed if not any(p in line[3:] for p in allowed)]
+          if outside:
+              print("Changes outside the requested source directory:")
+              print("\n".join(outside))
+              sys.exit(1)
+          PY
+
+      - name: Commit and push cleanup branch
+        id: commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add source-import/datnet-share-v5-final/source/
+          if git diff --cached --quiet; then
+            echo "No source changes were produced; refusing to create an empty branch commit."
+            exit 1
+          fi
+          git commit -m "Remove DataNet branding from imported source"
+          git push origin "${{ steps.branch.outputs.name }}"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build and test imported source
+        id: build
+        working-directory: source-import/datnet-share-v5-final/source
+        shell: bash
+        run: |
+          chmod +x ./gradlew
+          ./gradlew --no-daemon testDebugUnitTest assembleDebug
+
+      - name: Open pull request for review
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          gh pr create             --repo "${GITHUB_REPOSITORY}"             --head "${{ steps.branch.outputs.name }}"             --base "${{ inputs.base_ref }}"             --title "Remove DataNet branding from imported source"             --body "Automated source-only package and branding cleanup. The workflow verifies that legacy package/branding identifiers are absent from non-legal source text and runs the imported Android project's unit tests and debug build. Networking implementation is intentionally unchanged. Please review the diff before merging."
