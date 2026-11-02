@@ -12,8 +12,8 @@ android {
         applicationId = "pro.pistolwhip.phuckmyhotspot"
         minSdk = 26
         targetSdk = 34
-        versionCode = 504
-        versionName = "5.0.4"
+        versionCode = 505
+        versionName = "5.0.5"
     }
 
     buildTypes {
