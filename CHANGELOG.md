@@ -2,7 +2,7 @@
 
 All notable changes to Phuck My Hotspot are recorded here.
 
-## [5.0.4] - 2026-11-02
+## [5.0.5] - 2026-11-02
 
 ### Added
 - Diagnostic event logging for app/activity and foreground-service lifecycle.
