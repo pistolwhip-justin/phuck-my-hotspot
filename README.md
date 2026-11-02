@@ -1,4 +1,4 @@
-# Phuck StraightTalk
+# Phuck My Hotspot
 
 **An independently rebranded build of DataNet Share 5.0.0.**
 

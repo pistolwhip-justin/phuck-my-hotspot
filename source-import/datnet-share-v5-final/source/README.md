@@ -1,4 +1,4 @@
-# Phuck StraightTalk
+# Phuck My Hotspot
 
 Share your Android phone's mobile data with other devices using the original DataNet Share implementation — without using the carrier hotspot feature.
 
@@ -18,7 +18,7 @@ Refer to the original documentation below for the existing setup instructions, a
 
 ## Install the test APK
 
-Download the APK from the [Phuck StraightTalk GitHub Releases](https://github.com/pistolwhip-justin/phuck-straighttalk/releases). The initial rebranded build is debug-signed for sideload testing and is not a production/Play Store release. The new application ID allows it to install alongside the original app.
+Download the APK from the [Phuck My Hotspot GitHub Releases](https://github.com/pistolwhip-justin/phuck-straighttalk/releases). The initial rebranded build is debug-signed for sideload testing and is not a production/Play Store release. The new application ID allows it to install alongside the original app.
 
 ## Original upstream documentation
 

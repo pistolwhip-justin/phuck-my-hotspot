@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "pro.pistolwhip.phuckstraighttalk.diagnostic"
+        applicationId = "pro.pistolwhip.phuckmyhotspot"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

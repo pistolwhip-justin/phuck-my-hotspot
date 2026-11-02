@@ -167,7 +167,7 @@ class SenderService : Service() {
     }
 
     private fun buildNotification(title: String, text: String): Notification {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager; nm.createNotificationChannel(NotificationChannel(Constants.CHANNEL_ID, "Phuck StraightTalk", NotificationManager.IMPORTANCE_LOW)) }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager; nm.createNotificationChannel(NotificationChannel(Constants.CHANNEL_ID, "Phuck My Hotspot", NotificationManager.IMPORTANCE_LOW)) }
         return NotificationCompat.Builder(this, Constants.CHANNEL_ID).setContentTitle(title).setContentText(text).setSmallIcon(android.R.drawable.stat_sys_data_bluetooth).setOngoing(true).build()
     }
 

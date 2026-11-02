@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         passText = findViewById(R.id.passText)
         interfacesText = findViewById(R.id.interfacesText)
         exportDiagnosticsBtn = findViewById(R.id.btnExportDiagnostics)
-        exportDiagnosticsBtn.setOnClickListener { createDiagnosticDocument.launch("PhuckStraightTalk-DiagnosticWTF-logs.txt") }
+        exportDiagnosticsBtn.setOnClickListener { createDiagnosticDocument.launch("PhuckStraightTalk-Phuck My Hotspot-logs.txt") }
         senderBtn.setOnClickListener { startSender() }
         localOnlyBtn.setOnClickListener { startLocalOnly() }
         receiverBtn.setOnClickListener { startReceiver() }

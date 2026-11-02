@@ -15,11 +15,11 @@ import java.util.concurrent.TimeUnit
 
 /**
  * Diagnostic-only, asynchronous event logger.
- * This class is added only to the DiagnosticWTF branch/build.
+ * This class is added only to the Phuck My Hotspot branch/build.
  * It observes state; it must never control application behavior.
  */
 object DiagnosticLogger {
-    private const val TAG = "DiagnosticWTF"
+    private const val TAG = "Phuck My Hotspot"
     private const val MAX_LOG_BYTES = 8L * 1024L * 1024L
     private val writer = Executors.newSingleThreadExecutor { r ->
         Thread(r, "diagnostic-log-writer").apply { isDaemon = true }

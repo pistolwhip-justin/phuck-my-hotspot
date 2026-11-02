@@ -1,8 +1,8 @@
-# Phuck StraightTalk DiagnosticWTF
+# Phuck My Hotspot
 
 ## Purpose
 
-DiagnosticWTF is a separate diagnostic-only build based on the known-good Phuck StraightTalk v5.0.3 source. Its purpose is to observe current app behavior before any performance or operational changes are considered.
+Phuck My Hotspot is a separate diagnostic-only build based on the known-good Phuck My Hotspot v5.0.3 source. Its purpose is to observe current app behavior before any performance or operational changes are considered.
 
 **Non-goal:** this branch must not implement wake-lock changes, background reporting changes, socket-buffer tuning, forwarding refactors, or other changes intended to alter the app's networking behavior.
 
@@ -10,9 +10,9 @@ DiagnosticWTF is a separate diagnostic-only build based on the known-good Phuck 
 
 - Branch: `diagnostic/1.0.0`
 - Independent version sequence: starts at `1.0.0`
-- Application ID: `pro.pistolwhip.phuckstraighttalk.diagnostic`
+- Application ID: `pro.pistolwhip.phuckmyhotspot`
 - Release tag: `v1.0.0`
-- APK asset: `PhuckStraightTalk-DiagnosticWTF-v1.0.0-debug.apk`
+- APK asset: `PhuckStraightTalk-Phuck My Hotspot-v1.0.0-debug.apk`
 - Production branch/release baseline remains `main` / `v5.0.3`.
 - Diagnostic changes must not be merged into production. If diagnostic findings justify a production change, implement that change separately without carrying over the diagnostic logger.
 
@@ -32,9 +32,9 @@ The instrumentation observes events at existing code paths; it does not change w
 
 ## How to collect logs
 
-1. Install DiagnosticWTF on the sender or receiver phone. Its distinct application ID allows it to coexist with the production app.
+1. Install Phuck My Hotspot on the sender or receiver phone. Its distinct application ID allows it to coexist with the production app.
 2. Reproduce the test condition and let it run for the intended duration.
-3. Open DiagnosticWTF and tap **EXPORT DIAGNOSTIC LOGS**.
+3. Open Phuck My Hotspot and tap **EXPORT DIAGNOSTIC LOGS**.
 4. Save the text file and review it before sharing. The app avoids logging Wi-Fi Direct credentials, but logs may still contain operational metadata.
 
 Logs remain in the app's private storage until exported. Uninstalling the diagnostic app removes its private logs unless you exported them first.
