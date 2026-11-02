@@ -67,6 +67,15 @@ jobs:
           gradle --no-daemon testDebugUnitTest assembleDebug
           test -s app/build/outputs/apk/debug/app-debug.apk
           cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/PhuckMyHotspot-v5.0.5-debug.apk"
+      - name: Upload APK as a temporary build artifact
+        if: steps.guard.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhuckMyHotspot-v5.0.5-debug
+          path: PhuckMyHotspot-v5.0.5-debug.apk
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Create immutable release and upload APK
         if: steps.guard.outputs.skip != 'true'
         env:
