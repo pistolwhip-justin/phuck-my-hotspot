@@ -8,7 +8,7 @@ Phuck My Hotspot is an independently rebranded Android application based on Data
 
 ## 📦 Test APK
 
-The current test build is **v5.0.4**.
+The current test build is **v5.0.5**.
 
 - [Download the latest release APK](https://github.com/pistolwhip-justin/phuck-my-hotspot/releases/latest)
 - [All releases](https://github.com/pistolwhip-justin/phuck-my-hotspot/releases)
