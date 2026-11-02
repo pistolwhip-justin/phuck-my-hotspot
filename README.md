@@ -1,6 +1,6 @@
 # 📶 Phuck My Hotspot
 
-![Build](https://img.shields.io/badge/build-GitHub%20Actions-blue) ![License](https://img.shields.io/badge/license-WTFPL-brightgreen)
+[![Build](https://github.com/pistolwhip-justin/phuck-my-hotspot/actions/workflows/release-5.0.5.yml/badge.svg)](https://github.com/pistolwhip-justin/phuck-my-hotspot/actions/workflows/release-5.0.5.yml) [![Latest Release](https://img.shields.io/github/v/release/pistolwhip-justin/phuck-my-hotspot?label=latest%20release)](https://github.com/pistolwhip-justin/phuck-my-hotspot/releases/latest) ![Platform](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white) [![License](https://img.shields.io/github/license/pistolwhip-justin/phuck-my-hotspot)](LICENSE.md) [![Last Commit](https://img.shields.io/github/last-commit/pistolwhip-justin/phuck-my-hotspot)](https://github.com/pistolwhip-justin/phuck-my-hotspot/commits/main)
 
 **Share your Android phone's internet connection with nearby devices over Wi-Fi Direct.**
 
