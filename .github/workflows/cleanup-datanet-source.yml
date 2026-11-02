@@ -1,6 +1,9 @@
 name: Clean DataNet references from imported source
 
 on:
+  push:
+    paths:
+      - '.github/workflows/cleanup-datanet-source.yml'
   workflow_dispatch:
     inputs:
       base_ref:
