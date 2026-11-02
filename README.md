@@ -1,30 +1,53 @@
-# Phuck My Hotspot
+# 📶 Phuck My Hotspot
 
-**An independently rebranded build of DataNet Share 5.0.0.**
+![Build](https://img.shields.io/badge/build-GitHub%20Actions-blue) ![License](https://img.shields.io/badge/license-WTFPL-brightgreen)
 
-Share an Android phone's mobile data with other devices using the original project's SOCKS5 proxy and Wi-Fi Direct functionality. This repository preserves the imported upstream implementation; the current changes are limited to branding, application identity, and test-build/release setup.
+**Share your Android phone's internet connection with nearby devices over Wi-Fi Direct.**
 
-## Test APK
+Phuck My Hotspot is an independently rebranded Android application based on DataNet Share. It preserves the existing sender/receiver networking implementation and now includes diagnostic logging for service lifecycle, wake-lock activity, traffic counters, tunnel statistics, CPU-time snapshots, battery readings, and errors.
 
-The first rebranded test build is published as the **v5.0.0** GitHub Release asset when the versioned Actions workflow succeeds.
+## 📦 Test APK
 
-- [Releases and APK downloads](https://github.com/pistolwhip-justin/phuck-straighttalk/releases)
-- [Build workflow status](https://github.com/pistolwhip-justin/phuck-straighttalk/actions/workflows/release-5.0.0.yml)
+The current test build is **v5.0.4**.
 
-This is a **debug-signed sideload/testing APK**, not a Play Store or production-signed release. Because it uses a new application ID, it installs separately from the original DataNet Share app. Android may require permission to install apps from the browser or file manager.
+- [Download the latest release APK](https://github.com/pistolwhip-justin/phuck-my-hotspot/releases/latest)
+- [All releases](https://github.com/pistolwhip-justin/phuck-my-hotspot/releases)
+- [GitHub Actions builds](https://github.com/pistolwhip-justin/phuck-my-hotspot/actions)
 
-## Original project and attribution
+This is a debug-signed sideload/testing APK, not a Play Store release. It uses the production application ID `pro.pistolwhip.phuckmyhotspot`. Device behavior must still be validated on the intended phones.
 
-This project is based on [DataNet Share by Keggin-AI](https://github.com/Keggin-AI/DataNetShare). The original technical implementation and documentation are retained as much as practical during this branding pass. The upstream project is licensed under the MIT License; its original license/copyright notices must remain with the copied material. Branding and repository changes are by Justin S. / Pistolwhip Productions LLC.
+## 🔎 Diagnostics
+
+The app records diagnostic events asynchronously to private app storage. Use **EXPORT DIAGNOSTIC LOGS** in the app to save a text log through Android's document picker.
+
+The log is intended to help investigate long-running hotspot sessions and includes timestamps, elapsed time, process CPU-time snapshots, battery percentage snapshots, service/activity lifecycle, wake-lock acquire/release events, Wi-Fi Direct state transitions, and network/tunnel counters. It does not intentionally record notification contents, Wi-Fi passwords, or shared credentials.
+
+Diagnostics add some measurement and file-I/O overhead. Treat measurements as observations of this instrumented build, not as a zero-overhead performance baseline.
+
+## 🛠️ Build from source
+
+The Android project is located at:
+
+`source-import/datnet-share-v5-final/source`
+
+The versioned GitHub Actions workflow uses JDK 17, Gradle 8.5, and Android SDK 34. It runs available debug unit tests and assembles a debug APK from the committed source.
+
+## 🧾 Upstream project and attribution
+
+This project is based on [DataNet Share by Keggin-AI](https://github.com/Keggin-AI/DataNetShare). The original implementation and its upstream notices are retained where applicable. The upstream project includes MIT-licensed material; this repository's WTFPL notice does not remove or replace those original obligations.
+
+Branding and repository maintenance: Justin S. / Pistolwhip Productions LLC.
 
 - Website: https://pistolwhip.pro
 - Contact: justin@pistolwhip.pro
-- Support: [open an issue in this repository](https://github.com/pistolwhip-justin/phuck-straighttalk/issues)
+- [Report an issue](https://github.com/pistolwhip-justin/phuck-my-hotspot/issues)
 
-## Build
+## 📜 License
 
-The source project is in [source-import/datnet-share-v5-final/source](source-import/datnet-share-v5-final/source). The versioned GitHub Actions workflow builds the debug APK from committed source using JDK 17, Gradle 8.5, and Android SDK 34, runs available debug unit tests, and attaches the APK to the matching GitHub Release.
+[![WTFPL](logo-wtfpl.png)](LICENSE.md)
 
-## Scope of this copy
+This repository's original contributions are licensed under the [Do What The Fuck You Want To Public License, Version 2](LICENSE.md). Retained upstream components remain subject to their original license and copyright notices.
 
-This pass is a rebrand only. Existing project files, generated build-cache material, original APK, and security audit are being retained for the owner's test and review. Cleanup or technical changes beyond those necessary to build the rebranded APK are deferred until after testing.
+---
+
+Last updated: 2026-11-02
