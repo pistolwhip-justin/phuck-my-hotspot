@@ -1,0 +1,73 @@
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    // Keep the original Kotlin namespace so existing source references remain unchanged.
+    namespace = "com.datanet.share"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "pro.pistolwhip.phuckstraighttalk.diagnostic"
+        minSdk = 26
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0.0"
+    }
+
+    signingConfigs {
+        create("release") {
+            // Original upstream release-signing configuration retained for reference.
+            // The test APK is built with the Android debug signing key, not this config.
+            storeFile = file(System.getenv("DATANET_STORE_FILE") ?: "/home/z/my-project/keystore/datanet-release.jks")
+            storePassword = System.getenv("DATANET_STORE_PASSWORD") ?: "datanetshare2024"
+            keyAlias = System.getenv("DATANET_KEY_ALIAS") ?: "datanet"
+            keyPassword = System.getenv("DATANET_KEY_PASSWORD") ?: "datanetshare2024"
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            isMinifyEnabled = false
+        }
+    }
+
+    externalNativeBuild {
+        // Preserve the upstream project configuration.
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    packaging {
+        resources {
+            excludes += setOf("/META-INF/{AL2.0,LGPL2.1}", "/META-INF/DEPENDENCIES")
+        }
+    }
+}
+
+dependencies {
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-service:2.7.0")
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+}
