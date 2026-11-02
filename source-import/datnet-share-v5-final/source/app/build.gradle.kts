@@ -12,26 +12,14 @@ android {
         applicationId = "pro.pistolwhip.phuckmyhotspot"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
-    }
-
-    signingConfigs {
-        create("release") {
-            // Original upstream release-signing configuration retained for reference.
-            // The test APK is built with the Android debug signing key, not this config.
-            storeFile = file(System.getenv("DATANET_STORE_FILE") ?: "/home/z/my-project/keystore/datanet-release.jks")
-            storePassword = System.getenv("DATANET_STORE_PASSWORD") ?: "datanetshare2024"
-            keyAlias = System.getenv("DATANET_KEY_ALIAS") ?: "datanet"
-            keyPassword = System.getenv("DATANET_KEY_PASSWORD") ?: "datanetshare2024"
-        }
+        versionCode = 504
+        versionName = "5.0.4"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isMinifyEnabled = false
