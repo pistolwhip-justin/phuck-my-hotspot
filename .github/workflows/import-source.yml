@@ -28,7 +28,7 @@ jobs:
           git clone "https://github.com/${SOURCE_REPO}.git" "$tmp/source"
           git -C "$tmp/source" checkout --detach "$SOURCE_COMMIT"
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          tar -C "$tmp/source" --exclude=.git -cf - . | tar -xf -
+          tar -C "$tmp/source" --exclude=.git --exclude=.github -cf - . | tar -xf -
           git add -A
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
