@@ -57,3 +57,5 @@ jobs:
           git add -A
           git commit -m "Rebrand application as Phuck My Hotspot"
           git push
+
+# Rebrand workflow registered.
