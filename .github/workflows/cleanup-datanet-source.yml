@@ -117,16 +117,6 @@ jobs:
               if generated.is_dir():
                   shutil.rmtree(generated)
 
-          # Rename the source README's project-facing upstream branding, without
-          # altering license/copyright files or the actual networking implementation.
-          readme = root / "README.md"
-          if readme.exists():
-              text = readme.read_text(encoding="utf-8")
-              text = text.replace("DataNet Share", "the original upstream project")
-              text = text.replace("DataNetShare", "the original upstream project")
-              text = text.replace("Keggin-AI", "the original upstream author")
-              readme.write_text(text, encoding="utf-8", newline="")
-
           # Verify no legacy package/brand identifiers remain in non-legal text.
           patterns = [
               re.compile(r"com[./]datanet[./]share", re.I),
@@ -152,6 +142,46 @@ jobs:
 
           print("Source migration and legacy identifier scan completed.")
           PY
+
+      - name: Write accurate project README
+        working-directory: source-import/datnet-share-v5-final/source
+        shell: bash
+        run: |
+          cat > README.md <<'EOF'
+          # Phuck My Hotspot
+
+          Share your Android phone's mobile data with other devices using Wi-Fi Direct and Android's VPN APIs, without using the carrier hotspot feature.
+
+          This is an independently rebranded copy of an upstream Android application originally published by Keggin-AI. The rebranding is intended to preserve the existing implementation and behavior; it does not independently validate upstream performance claims or carrier compatibility.
+
+          ## Features retained from the upstream project
+
+          - No root required — uses Android's VpnService and Wi-Fi Direct APIs
+          - Wi-Fi Direct phone-to-phone, local-only USB/Wi-Fi to PC/Mac, and receiver modes
+          - SOCKS5 TCP and UDP support
+          - Cellular-bound upstream sockets
+          - Screen-off operation using a partial wake lock
+          - Built-in UDP connectivity test
+          - No telemetry, analytics, or trackers according to the upstream documentation
+
+          Refer to the retained technical documentation for setup instructions, architecture notes, and troubleshooting. Historical technical material may retain original project identifiers where changing them could affect attribution or technical accuracy.
+
+          ## Install the test APK
+
+          Download the test APK from the [Phuck My Hotspot GitHub Releases](https://github.com/pistolwhip-justin/phuck-my-hotspot/releases). The test build is debug-signed for sideload testing and is not a production/Play Store release. The new application ID allows it to install alongside the original app.
+
+          ## Project contact
+
+          - **Developer:** Justin S.
+          - **Company:** Pistolwhip Productions LLC
+          - **Website:** https://pistolwhip.pro
+          - **Email:** justin@pistolwhip.pro
+          - **Support:** [GitHub Issues](https://github.com/pistolwhip-justin/phuck-my-hotspot/issues)
+
+          ## License and attribution
+
+          The imported upstream project is MIT-licensed. Original license and copyright notices are retained with the imported material. Rebranding and repository-specific additions are by Justin S. / Pistolwhip Productions LLC; this does not remove or replace upstream attribution.
+          EOF
 
       - name: Confirm source-only change scope
         shell: bash
@@ -210,6 +240,24 @@ jobs:
         shell: bash
         run: |
           gradle --no-daemon testDebugUnitTest assembleDebug
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$APK"
+          sha256sum "$APK" | tee apk-sha256.txt
+
+      - name: Publish test APK release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v5.0.6-test-${{ github.run_number }}
+          name: Phuck My Hotspot v5.0.6 Test Build ${{ github.run_number }}
+          body: |
+            Automated debug-signed test build from the isolated source-cleanup branch.
+            Unit tests and Android debug assembly completed successfully.
+            This is a prerelease for sideload testing, not a production/Play Store release.
+          prerelease: true
+          make_latest: false
+          files: source-import/datnet-share-v5-final/source/app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Open pull request for review
         if: success()
