@@ -1,8 +1,8 @@
 # Phuck My Hotspot
 
-Share your Android phone's mobile data with other devices using the original Phuck My Hotspot implementation — without using the carrier hotspot feature.
+Share your Android phone's mobile data with other devices using Wi-Fi Direct and Android's VPN APIs, without using the carrier hotspot feature.
 
-This repository is an independently rebranded copy of [Phuck My Hotspot](https://github.com/the original upstream author/PhuckMyHotspot), originally published by the original upstream author. This branding pass is intended to preserve the original app's technical behavior and documentation; it does not independently validate upstream performance claims or carrier compatibility.
+This is an independently rebranded copy of an upstream Android application originally published by Keggin-AI. The rebranding is intended to preserve the existing implementation and behavior; it does not independently validate upstream performance claims or carrier compatibility.
 
 ## Features retained from the upstream project
 
@@ -14,15 +14,11 @@ This repository is an independently rebranded copy of [Phuck My Hotspot](https:/
 - Built-in UDP connectivity test
 - No telemetry, analytics, or trackers according to the upstream documentation
 
-Refer to the original documentation below for the existing setup instructions, architecture notes, troubleshooting, and implementation details. Those instructions are retained as upstream technical material and may include original project names or version-specific details.
+Refer to the retained technical documentation for setup instructions, architecture notes, and troubleshooting. Some historical technical material may retain original project identifiers where changing them could affect attribution or technical accuracy.
 
 ## Install the test APK
 
-Download the APK from the [Phuck My Hotspot GitHub Releases](https://github.com/pistolwhip-justin/phuck-straighttalk/releases). The initial rebranded build is debug-signed for sideload testing and is not a production/Play Store release. The new application ID allows it to install alongside the original app.
-
-## Original upstream documentation
-
-The technical documentation and original project material remain in this repository. The upstream project is [Phuck My Hotspot by the original upstream author](https://github.com/the original upstream author/PhuckMyHotspot). Original license and copyright notices are retained with the imported material.
+Download the test APK from the [Phuck My Hotspot GitHub Releases](https://github.com/pistolwhip-justin/phuck-my-hotspot/releases). The initial rebranded build is debug-signed for sideload testing and is not a production/Play Store release. The new application ID allows it to install alongside the original app.
 
 ## Project contact
 
@@ -30,8 +26,8 @@ The technical documentation and original project material remain in this reposit
 - **Company:** Pistolwhip Productions LLC
 - **Website:** https://pistolwhip.pro
 - **Email:** justin@pistolwhip.pro
-- **Support:** [GitHub Issues](https://github.com/pistolwhip-justin/phuck-straighttalk/issues)
+- **Support:** [GitHub Issues](https://github.com/pistolwhip-justin/phuck-my-hotspot/issues)
 
 ## License and attribution
 
-The original Phuck My Hotspot project is MIT-licensed. See the original repository and any license/copyright notices included with the imported source. Rebranding and repository-specific additions are by Justin S. / Pistolwhip Productions LLC; this does not remove or replace upstream attribution.
+The imported upstream project is MIT-licensed. The original license and copyright notices are retained with the imported material. Rebranding and repository-specific additions are by Justin S. / Pistolwhip Productions LLC; this does not remove or replace upstream attribution.
