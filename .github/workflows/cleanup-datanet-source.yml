@@ -199,13 +199,17 @@ jobs:
         with:
           packages: 'platform-tools platforms;android-34 build-tools;34.0.0'
 
+      - name: Install Gradle 8.5
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.5'
+
       - name: Build and test imported source
         id: build
         working-directory: source-import/datnet-share-v5-final/source
         shell: bash
         run: |
-          chmod +x ./gradlew
-          ./gradlew --no-daemon testDebugUnitTest assembleDebug
+          gradle --no-daemon testDebugUnitTest assembleDebug
 
       - name: Open pull request for review
         if: success()
