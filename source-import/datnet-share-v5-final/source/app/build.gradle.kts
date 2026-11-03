@@ -5,7 +5,7 @@ plugins {
 
 android {
     // Keep the original Kotlin namespace so existing source references remain unchanged.
-    namespace = "com.datanet.share"
+    namespace = "pro.pistolwhip.phuckmyhotspot"
     compileSdk = 34
 
     defaultConfig {
