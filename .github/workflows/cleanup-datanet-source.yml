@@ -242,7 +242,8 @@ jobs:
           gradle --no-daemon testDebugUnitTest assembleDebug
           APK="app/build/outputs/apk/debug/app-debug.apk"
           test -s "$APK"
-          sha256sum "$APK" | tee apk-sha256.txt
+          cp "$APK" "app/build/outputs/apk/debug/PhuckMyHotspot-v5.0.6-test-${{ github.run_number }}-debug.apk"
+          sha256sum "app/build/outputs/apk/debug/PhuckMyHotspot-v5.0.6-test-${{ github.run_number }}-debug.apk" | tee apk-sha256.txt
 
       - name: Publish test APK release
         uses: softprops/action-gh-release@v2
@@ -255,7 +256,7 @@ jobs:
             This is a prerelease for sideload testing, not a production/Play Store release.
           prerelease: true
           make_latest: false
-          files: source-import/datnet-share-v5-final/source/app/build/outputs/apk/debug/app-debug.apk
+          files: source-import/datnet-share-v5-final/source/app/build/outputs/apk/debug/PhuckMyHotspot-v5.0.6-test-${{ github.run_number }}-debug.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
